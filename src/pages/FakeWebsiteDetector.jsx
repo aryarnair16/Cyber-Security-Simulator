@@ -31,6 +31,15 @@ export const FakeWebsiteDetector = () => {
     incrementStat("websitesChecked");
   };
 
+  
+  const inspectAnother = () => {
+  const currentIndex = websiteExamples.findIndex(item => item.id === selectedId);
+  const nextIndex = (currentIndex + 1)%websiteExamples.length;
+  const nextwebsite = websiteExamples[nextIndex];
+  setSelectedId(nextwebsite.id);
+  reset();
+  };
+
   const reset = () => {
     setVerdict(null);
     setShowResult(false);
@@ -195,7 +204,7 @@ export const FakeWebsiteDetector = () => {
                   <p className="text-white font-mono text-sm">{site.safeVersion.url}</p>
                 </CyberCard>
 
-                <AnimatedButton onClick={reset} variant="secondary" className="mt-4">
+                <AnimatedButton onClick={inspectAnother} variant="secondary" className="mt-4">
                   Inspect Another
                 </AnimatedButton>
               </motion.div>
