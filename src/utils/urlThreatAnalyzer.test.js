@@ -71,3 +71,15 @@ test("supports other multi-part public suffixes", () => {
   assert.equal(auResult.registrableDomain, "example.com.au");
 });
 
+test("handles single-label domains and raw IP addresses", () => {
+  const localhostResult = analyzeUrl("http://localhost");
+  const ipResult = analyzeUrl("http://192.0.2.10");
+
+  // Single-label domains are rejected by the existing validator.
+  assert.equal(localhostResult.isValid, false);
+
+  // Raw IP addresses are accepted and correctly identified.
+  assert.equal(ipResult.isValid, true);
+  assert.equal(ipResult.registrableDomain, "192.0.2.10");
+  assert.ok(ipResult.findings.some((f) => f.code === "ip-host"));
+});
