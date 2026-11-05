@@ -15,13 +15,14 @@ const navLinks = [
   { to: "/attack-simulation", label: "Scenarios" },
   { to: "/attack-paths", label: "Attack Paths" },
   {
-  to: "/incident-investigation",
-  label: "Investigation",
-  children: [
-    { to: "/dashboard", label: "Dashboard" },
-    { to: "/about", label: "About" },
-  ],
-},
+    to: "/incident-investigation",
+    label: "Investigation",
+    children: [
+      { to: "/dashboard", label: "Dashboard" },
+      { to: "/about", label: "About" },
+    ],
+  },
+  { to: "/cyber-news", label: "News" },
 ];
 
 export const Navbar = () => {

@@ -12,6 +12,7 @@ import { Dashboard } from "../pages/Dashboard";
 import { About } from "../pages/About";
 import { NotFound } from "../pages/NotFound";
 import { IncidentInvestigation } from "../pages/IncidentInvestigation";
+import { CyberNews } from "../pages/CyberNews";
 
 export const AppRoutes = () => (
   <Routes>
@@ -27,6 +28,7 @@ export const AppRoutes = () => (
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="about" element={<About />} />
       <Route path="incident-investigation" element={<IncidentInvestigation />} />
+      <Route path="cyber-news" element={<CyberNews />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </Routes>
