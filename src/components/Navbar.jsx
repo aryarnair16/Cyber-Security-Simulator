@@ -14,8 +14,14 @@ const navLinks = [
   { to: "/cyber-quiz", label: "Quiz", children: [{ to: "/custom-quiz", label: "Custom Quiz" }] },
   { to: "/attack-simulation", label: "Scenarios" },
   { to: "/attack-paths", label: "Attack Paths" },
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/about", label: "About" },
+  {
+  to: "/incident-investigation",
+  label: "Investigation",
+  children: [
+    { to: "/dashboard", label: "Dashboard" },
+    { to: "/about", label: "About" },
+  ],
+},
 ];
 
 export const Navbar = () => {
@@ -66,7 +72,7 @@ export const Navbar = () => {
                   {link.label}
                 </NavLink>
                 {link.children && (
-                  <div className="absolute left-0 top-full hidden min-w-44 pt-2 group-hover:block group-focus-within:block">
+                  <div className="absolute left-0 top-full hidden min-w-44 pt-2 group-hover:block">
                     <div className="rounded-xl border border-neon-green/15 bg-cyber-black/95 p-2 shadow-xl backdrop-blur-xl">
                       {link.children.map((child) => (
                         <NavLink

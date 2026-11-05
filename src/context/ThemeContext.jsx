@@ -10,11 +10,14 @@ export const ThemeProvider = ({ children }) => {
   const [quizScores, setQuizScores] = useLocalStorage("cyber-quiz-scores", []);
   const [xp, setXP] = useLocalStorage("cyber-xp", 0);
   const [levelUpNotification, setLevelUpNotification] = useState(null);
+  const [completedInvestigations, setCompletedInvestigations] =
+    useLocalStorage("cyber-completed-investigations", []);
   const [simulationStats, setSimulationStats] = useLocalStorage("cyber-sim-stats", {
     phishingCompleted: 0,
     websitesChecked: 0,
     quizzesTaken: 0,
     scenariosCompleted: 0,
+    investigationsCompleted: 0,
   });
 
   useEffect(() => {
@@ -67,6 +70,28 @@ export const ThemeProvider = ({ children }) => {
     setSimulationStats((s) => ({ ...s, [key]: (s[key] || 0) + 1 }));
   }, [setSimulationStats]);
 
+  const completeInvestigation = useCallback((incidentId) => {
+    if (!incidentId || completedInvestigations.includes(incidentId)) {
+      return false;
+    }
+
+    setCompletedInvestigations((prev) =>
+      prev.includes(incidentId) ? prev : [...prev, incidentId]
+    );
+
+    addXP(50);
+    incrementStat("investigationsCompleted");
+    unlockAchievement("incident-investigator");
+
+    return true;
+  }, [
+    completedInvestigations,
+    setCompletedInvestigations,
+    addXP,
+    incrementStat,
+    unlockAchievement,
+  ]);
+
   const resetProgress = useCallback(() => {
     setXP(0);
     setAchievements([]);
@@ -76,9 +101,17 @@ export const ThemeProvider = ({ children }) => {
       websitesChecked: 0,
       quizzesTaken: 0,
       scenariosCompleted: 0,
+      investigationsCompleted: 0,
     });
+    setCompletedInvestigations([]);
     setLevelUpNotification(null);
-  }, [setXP, setAchievements, setQuizScores, setSimulationStats]);
+  }, [
+    setXP,
+    setAchievements,
+    setQuizScores,
+    setSimulationStats,
+    setCompletedInvestigations,
+  ]);
 
   useEffect(() => {
     // Sanity cleanup if stats were inflated by an earlier render loop
@@ -100,6 +133,8 @@ export const ThemeProvider = ({ children }) => {
         recordQuizScore,
         simulationStats,
         incrementStat,
+        completedInvestigations,
+        completeInvestigation,
         xp,
         rankInfo,
         addXP,
